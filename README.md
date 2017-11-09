@@ -8,6 +8,7 @@ Validating HTML
 + This is a **bonus** individual assignment to makeup for possible weaknesses in MPs 1-3.
 + This MP will be worth 3% subject to the 15% maximum for individual MPs (MP1: 3%, MP2: 6%, MP3: 6%).
 + This MP will be due Nov 25 by 11:59pm. For anyone that has engaged with MPs 1-3, this assignment should take about 5-6 hours.
++ Github Classroom Link: [https://classroom.github.com/a/5kf8oi1_](https://classroom.github.com/a/5kf8oi1_)
 
 ## Background
 
