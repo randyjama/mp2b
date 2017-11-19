@@ -20,7 +20,7 @@ import java.util.Scanner;
 import java.util.Queue;
 
 public class ValidatorMain {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         HtmlValidator validator = new HtmlValidator();
         String pageText = "";
         Scanner console = new Scanner(System.in);
@@ -71,7 +71,7 @@ public class ValidatorMain {
                 System.out.print("Remove what element? ");
                 String element = console.nextLine().trim();
                 validator.removeAll(element);
-            } else if (choice.startsWith("v")) {}
+            } else if (choice.startsWith("v")) {
                 System.out.println(validator.validate());
             } else if (choice.startsWith("q")) {
                 break;
