@@ -70,42 +70,39 @@ public class HtmlValidator {
 			}
 		}
 	}
-	
+
 	/**
-	 * Returns a string that is an indented text representation of the HTML
-	 * tags in the queue. In this string, each tag is on its own line. Every
-	 * opening tag that requires a closing tag increases the level of
-	 * indentation of following tags by four spaces untilo its closing tag
-	 * is reached.
+	 * Returns a string that is an indented text representation of the HTML tags in
+	 * the queue. In this string, each tag is on its own line. Every opening tag
+	 * that requires a closing tag increases the level of indentation of following
+	 * tags by four spaces untilo its closing tag is reached.
 	 * 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
+	 *             if attempting to pop and empty stack
 	 */
 	public String validate() throws Exception {
-		Queue<HtmlTag> qTemp = new LinkedList<>(queue); 
+		Queue<HtmlTag> qTemp = new LinkedList<>(queue);
 		MyStack stack = new MyStack();
-		
+
 		String result = ""; // each tag is on a new line
 		String indent = ""; // each indent increases by 4 spaces
 		boolean first = true;
-		
+
 		while (!qTemp.isEmpty()) {
 			HtmlTag checker = qTemp.poll();
-			
-			if(!checker.isSelfClosing() && checker.isOpenTag()) {
+
+			if (!checker.isSelfClosing() && checker.isOpenTag()) {
 				result += "\n" + indent + checker.toString();
 				stack.push(checker);
 				indent += "    ";
-			}
-			else if (checker.isSelfClosing()) {
+			} else if (checker.isSelfClosing()) {
 				result += "\n" + indent + checker.toString();
-			}
-			else {
+			} else {
 				// check if closing tag matches most recently opened tag
 				if (!checker.matches(stack.peek())) {
 					result += "\nERROR unexpected tag: " + checker;
-				}
-				else {
+				} else {
 					indent = indent.substring(0, indent.length() - 4);
 					result += "\n" + indent + checker.toString();
 					stack.pop();
@@ -117,29 +114,12 @@ public class HtmlValidator {
 				first = false;
 			}
 		}
-		
-		//check if stack is empty
+
+		// check if stack is empty
 		while (!stack.isEmpty()) {
-			
+			result += "\nERROR unclosed tag: " + stack.pop().toString();
 		}
-		
+
 		return result;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

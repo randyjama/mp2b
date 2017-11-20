@@ -53,7 +53,7 @@ public class HtmlValidationTest {
 	
 	// test HtmlValidator validate() method
 	@Test
-	public void test2() throws Exception {
+	public void test1() throws Exception {
 		String text;
 		String content = new Scanner(new File("expected_output_7.txt")).useDelimiter("\\Z").next();
 		System.out.println(content);
@@ -106,6 +106,49 @@ public class HtmlValidationTest {
 		
 		System.out.println(val.validate());
 		assertEquals(content, val.validate());
+	}
+	
+	// test error handling
+	@Test
+	public void test2() throws Exception {
+		
+		//MANUALLY CONSTRUCT THE STRING RESULT FOR COMPARISON
+		
+		HtmlTag tag1 = new HtmlTag("!doctype");
+		HtmlTag tag2 = new HtmlTag("a"); // unclosed
+		HtmlTag tag3 = new HtmlTag("headings");
+		HtmlTag tag4 = new HtmlTag("title");
+		HtmlTag tag5 = new HtmlTag("meta");
+		HtmlTag tag6 = new HtmlTag("meta");
+		HtmlTag tag7 = new HtmlTag("title", false);
+		HtmlTag tag8 = new HtmlTag("headings", false);
+		HtmlTag tag9 = new HtmlTag("title", false); // extra
+		
+		String compare = tag1.toString() + "\n" + tag2.toString()
+		+ "\n    " + tag3.toString() + "\n        " + tag4.toString()
+		+ "\n            " + tag5.toString() + "\n            " + tag6.toString()
+		+ "\n        " + tag7.toString() + "\n    " + tag8.toString()
+		+ "\nERROR unexpected tag: " + tag9.toString() 
+		+ "\nERROR unclosed tag: <a>";
+		
+		Queue<HtmlTag> queue = new LinkedList<>();
+		
+		queue.add(tag1);
+		queue.add(tag2);
+		queue.add(tag3);
+		queue.add(tag4);
+		queue.add(tag5);
+		queue.add(tag6);
+		queue.add(tag7);
+		queue.add(tag8);
+		queue.add(tag9);
+		
+		HtmlValidator val = new HtmlValidator(queue);
+		
+		System.out.println(val.validate());
+		System.out.println(compare);
+		
+		assertEquals(compare, val.validate());
 	}
 
 }
